@@ -1,0 +1,33 @@
+//https://www.codingninjas.com/studio/problems/number-of-distinct-substring_8230842?challengeSlug=striver-sde-challenge&leftPanelTab=1
+
+#include <bits/stdc++.h> 
+class Node {
+public:
+    Node* links[26];
+};
+
+void insert(Node* root, const std::string& s, int& cnt) {
+    int n = s.length();
+    Node* cur = root;
+    for (int i = 0; i < n; i++) {
+        if (cur->links[s[i] - 'a'] == NULL) {
+            cnt++;
+            cur->links[s[i] - 'a'] = new Node();
+        }
+        cur = cur->links[s[i] - 'a'];
+    }
+}
+
+int distinctSubstring(const std::string& word) {
+    int n = word.length();
+    Node* root = new Node();
+    int cnt = 0;
+    for (int i = 0; i < n; i++) {
+        std::string s;
+        for (int j = i; j < n; j++) {
+            s += word[j];
+            insert(root, s, cnt);
+        }
+    }
+    return cnt;
+}
